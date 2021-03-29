@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.4.4'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id "com.gorylenko.gradle-git-properties" version "2.2.4"
 }
 
 group = 'com.ealanta'
@@ -24,7 +25,6 @@ dependencies {
 	implementation 'org.projectlombok:lombok'
 	implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
 	implementation 'org.projectlombok:lombok'
-	implementation 'pl.project13.maven:git-commit-id-plugin:4.0.4'
 
 	annotationProcessor 'org.projectlombok:lombok'
 	compileOnly 'org.projectlombok:lombok'
