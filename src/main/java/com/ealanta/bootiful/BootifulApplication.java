@@ -1,10 +1,8 @@
 package com.ealanta.bootiful;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.availability.AvailabilityChangeEvent;
@@ -13,8 +11,12 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
+import org.springframework.nativex.hint.ResourceHint;
+import org.springframework.nativex.hint.TypeHint;
+import org.springframework.nativex.hint.TypeHints;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,8 @@ import reactor.core.publisher.Flux;
 
 @SpringBootApplication
 @Log
+@TypeHint(types = Customer.class)
+@ResourceHint(patterns = {"git.properties"})
 public class BootifulApplication {
 
 	public static void main(String[] args) {
@@ -45,18 +49,6 @@ public class BootifulApplication {
 
 }
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-class Customer {
-
-	@Id
-	private Integer id;
-
-	private String name;
-
-}
-
 interface CustomerRepository extends ReactiveCrudRepository<Customer, Integer> {
 }
 
@@ -69,6 +61,7 @@ class RestController {
 		public Flux<Customer> get(){
 			return repo.findAll();
 		}
+
 }
 
 // http://localhost:8080/actuator/health/liveness UP
